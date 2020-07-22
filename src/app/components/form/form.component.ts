@@ -46,7 +46,7 @@ export class FormComponent implements OnInit {
     this.assets.push(this.createAsset());
   }
 
-  public deleteAsset(id) {
+  public deleteAsset(id: number) {
     this.assets = this.secondFormGroup.get('assets') as FormArray;
     this.assets.removeAt(id);
   }
