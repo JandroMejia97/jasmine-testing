@@ -5,6 +5,8 @@
 /server/dist
 /tmp
 /out-tsc
+istanbul/
+/.nyc_output
 
 # dependencies
 /node_modules
