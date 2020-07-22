@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material';
 import { ActionsComponent } from '../actions/actions.component';
 import { Router, NavigationStart } from '@angular/router';
@@ -9,7 +9,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
   public editMode = false;
 
   constructor(private bottomSheet: MatBottomSheet, private router: Router) {}
