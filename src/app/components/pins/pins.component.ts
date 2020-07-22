@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { RepositoryService } from 'src/app/services/repository.service';
 import { MatSnackBar } from '@angular/material';
 import { PinsService } from './pins.service';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./pins.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PinsComponent {
+export class PinsComponent implements OnInit {
   public step = 0;
   public pins = [];
   private currentSubscription: Subscription;
@@ -26,7 +26,7 @@ export class PinsComponent {
 
   ngOnInit() {
     this.repository.getPins().subscribe(pins => {
-      this.pins = pins.map(pin => {
+      this.pins = pins.map((pin: { assets: any[]; }) => {
         const controls = {};
 
         pin.assets.forEach(asset => {
@@ -40,7 +40,7 @@ export class PinsComponent {
       });
     });
 
-    this.pinsService.$actionObserver.pipe(filter(action => action === 'save')).subscribe(action => {
+    this.pinsService.$actionObserver.pipe(filter(action => action === 'save')).subscribe(_action => {
       this.updateProgress(this.step);
     });
   }
@@ -58,7 +58,7 @@ export class PinsComponent {
     this.step--;
   }
 
-  public updateProgress(index) {
+  public updateProgress(index: number) {
     const pin = this.pins[index];
 
     this.repository
@@ -70,7 +70,7 @@ export class PinsComponent {
         tags: pin.tags,
         assets: pin.assets
       })
-      .subscribe(pin => {
+      .subscribe(_pin => {
         this.snackBar.open('Progress updated!', 'OK', {
           duration: 2000
         });
@@ -81,7 +81,7 @@ export class PinsComponent {
     window.open(URL, '_blank');
   }
 
-  private updatePercentage(index) {
+  private updatePercentage(index: number) {
     if (this.currentSubscription && !this.currentSubscription.closed) {
       this.currentSubscription.unsubscribe();
     }
